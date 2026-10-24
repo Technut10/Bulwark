@@ -4,6 +4,7 @@ public class MagneticGaunlet : Ability<MagneticGauntletData>
 {
 	[Header("References")]
 	[Tooltip("Usually the Main Camera, so shots go where you're looking.")]
+	///<summary></summary>
 	[SerializeField] private Transform aimOrigin;
 	
 	[Header("Debug")]

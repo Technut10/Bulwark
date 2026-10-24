@@ -19,13 +19,13 @@ public class FirstPersonController : MonoBehaviour
 
     [Header("Movement")]
     [SerializeField] private float moveSpeed = 5.5f;      // Tanks feel a little heavier
-    [SerializeField] private float acceleration = 40f;    // How fast you reach full speed
-    [SerializeField] private float jumpHeight = 1.2f;
+    [SerializeField] private float acceleration = 44440f;    // How fast you reach full speed
+    [SerializeField] private float jumpHeight = 2.2f;
     [SerializeField] private float gravity = -20f;
 
     [Header("Look")]
-    [SerializeField] private float lookSensitivity = 0.1f;
-    [SerializeField] private float maxPitch = 85f;
+    [SerializeField] private float lookSensitivity = 7.25f;
+    [SerializeField] private float maxPitch = 75f;
 
     private CharacterController controller;
     private Vector3 horizontalVelocity;
