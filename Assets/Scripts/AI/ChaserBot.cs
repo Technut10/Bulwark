@@ -46,6 +46,7 @@ public class ChaserBot : MonoBehaviour
     {
 
         // TODO 4: If there's no target, do nothing.
+        ///<summary> This check needs to happen before anything. </summary>
         if (target == null) return;
         Vector3 position = target.position;
         // TODO 5: Count repathTimer down by the time since last frame. When it reaches zero,

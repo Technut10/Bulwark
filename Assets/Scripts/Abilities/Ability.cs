@@ -47,7 +47,7 @@ public abstract class Ability : MonoBehaviour
 		if (inputAction == null) return;
 
 		bool wantsToActivate = holdToActivate ? inputAction.action.IsPressed() : inputAction.action.WasPressedThisFrame();
-
+		
 		if (wantsToActivate)
 			TryActivate();
 	}
