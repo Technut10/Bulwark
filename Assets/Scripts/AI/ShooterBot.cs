@@ -1,4 +1,3 @@
-using UnityEditor.AdaptivePerformance.Editor;
 using UnityEngine;
 using UnityEngine.AI;
 [RequireComponent(typeof(NavMeshAgent), typeof(Health))]
@@ -16,8 +15,15 @@ public class ShooterBot : MonoBehaviour
     [Tooltip("Too close: back off.")]
     [SerializeField] private float retreatRange = 5f;
 
+
+    [Header("Movement")]
+    [SerializeField] private float repathInterval = 0.25f;
+    [SerializeField] private float retreatDistance = 4f;
+
+
     [Header("Shooting")]
     [SerializeField] private float fireInterval = 1f;
+
 
     private NavMeshAgent agent;
     private State currentState = State.Chase;
@@ -101,6 +107,7 @@ public class ShooterBot : MonoBehaviour
 
     private void Chase()
     {
+        agent.isStopped = true;
         // TODO 2: Make sure the agent is allowed to move,
         // then use the same repath countdown as ChaserBot.
         if (target == null) return;
@@ -111,19 +118,33 @@ public class ShooterBot : MonoBehaviour
         if (repathTimer <= 0f)
         {
             agent.SetDestination(position);
-            repathTimer = retreatRange;
+            repathTimer = repathInterval;
         }
-        
+        agent.isStopped = false;
     }
 
     private void Attack()
     {
         // TODO 3: Stop the agent, turn to face the target, and count down fireTimer. When it hits zero, Fire() and reset it.
+        agent.isStopped = true;
 
-         if (agent.isStopped)
+        // Direction FROM this bot TO the player
+        Vector3 direction = target.position - transform.position;
+
+        // Stay upright, don't tilt
+        direction.y = 0f;
+
+        transform.rotation = Quaternion.LookRotation(direction);
+
+
+        Quaternion.LookRotation(target.position);
+        fireTimer -= Time.deltaTime;
+        if(fireTimer <= 0)
         {
-            fireTimer -= fireInterval;
+            Fire();
+            fireTimer = fireInterval;
         }
+  
       
       
     }
@@ -131,6 +152,10 @@ public class ShooterBot : MonoBehaviour
     private void Retreat()
     {
         // TODO 4: Make sure the agent can move, then send it to a point retreatDistance away from the target, in the direction pointing from the target to this bot. 
+        agent.isStopped = false;
+        Vector3 away = (transform.position - target.position).normalized;
+        agent.SetDestination((transform.position + away) * retreatDistance);
+
     }
     
     private void Fire()
