@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.WSA;
 [RequireComponent(typeof(NavMeshAgent), typeof(Health))]
 public class ShooterBot : MonoBehaviour
 {
@@ -23,6 +24,8 @@ public class ShooterBot : MonoBehaviour
 
     [Header("Shooting")]
     [SerializeField] private float fireInterval = 1f;
+    [SerializeField] private Projectile projectilePrefab;
+    [SerializeField] private Transform firePoint;
 
 
     private NavMeshAgent agent;
@@ -161,5 +164,14 @@ public class ShooterBot : MonoBehaviour
     private void Fire()
     {
         Debug.Log($"{name}: Bang!");
+
+        Projectile projectile  = Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
+
+
+        Vector3 direction = (target.position + Vector3.up * 1f) - firePoint.position;
+
+        projectile.Launch(direction, gameObject);
+        
+
     }
 }

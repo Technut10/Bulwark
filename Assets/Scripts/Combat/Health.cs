@@ -39,7 +39,9 @@ public class Health : MonoBehaviour
 			else
 				gameObject.SetActive(false);
 		}
-	}
+
+        Debug.Log($"{name} took {amount} damage from {(source != null ? source.name : "unknown")}. Health: {Current}/{Max}");
+    }
 
 	public void Heal(float amount)
 	{
